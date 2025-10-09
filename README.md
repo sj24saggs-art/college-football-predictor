@@ -1,7 +1,3 @@
-Of course. Here is the full README content, ready to be pasted into your `README.md` file.
-
------
-
 # College Football Bowl Game Predictor 🏈
 
 This project is a machine learning endeavor to predict the outcomes of NCAA college football bowl games. It explores two distinct modeling methodologies: a direct, game-level differential model and a more complex replication of the approach from the Stanford CS229 report, ["Predicting the Outcome of College Bowl Games"](https://www.google.com/search?q=https://cs229.stanford.edu/proj2015/101_report.pdf).
