@@ -24,7 +24,7 @@ This is the primary and most successful approach because it uses the full season
   * **Feature Engineering:** The average performance statistics (e.g., avg points for, avg passing yards) are calculated for every team in every season, using all game types.
   * **Predictive Features:** For a given game, the model is provided with the full seasonal stats for both the home and away teams.
   * **Cross-Validation:** A robust season-by-season cross-validation is used, where each season's bowl games serve as the test set, with the model being trained on all other seasons.
-  * * **Target:** `score_difference` (predicted using Linear Regression).
+  * **Target:** `score_difference` (predicted using Linear Regression).
 
 ## 🛠️ Tech Stack
 
