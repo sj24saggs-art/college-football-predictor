@@ -1,6 +1,6 @@
 # College Football Bowl Game Predictor 🏈
 
-This project is a machine learning endeavor to predict the outcomes of NCAA college football bowl games. It explores two distinct modeling methodologies: a direct, game-level differential model and a more complex replication of the approach from the Stanford CS229 report, ["Predicting the Outcome of College Bowl Games"](https://www.google.com/search?q=https://cs229.stanford.edu/proj2015/101_report.pdf).
+This project is a machine learning endeavor to predict the outcomes of NCAA college football bowl games. It explores two distinct modeling methodologies that both use season-average statistics to compare team performance.
 
 The primary goal is to compare these methods and determine the most effective features for predicting winners in high-stakes matchups.
 
@@ -8,28 +8,23 @@ The primary goal is to compare these methods and determine the most effective fe
 
 This project evaluates and compares two distinct feature engineering approaches to predict game outcomes.
 
-### 1\. Direct Differential Model
+### 1\. Score Regression & SVM
 
-This is a baseline approach that creates features by directly calculating the difference in statistics between the home and away teams for each individual game. The model is trained on these direct, single-game differentials to establish a baseline prediction accuracy.
+This model finds the most effective features for predicting college football bowl game outcomes based on regular-season performance.
 
-  * **Features:** `rank_difference`, `pass_yards_diff`, `rush_yards_diff`, etc.
-  * **Target:** `score_difference`
+  * **Feature Engineering:** The model calculates the average regular-season performance statistics for every team in each season.
+  * **Predictive Features:** The model uses the difference between the two opponents' season-long average statistics for a given bowl game.
+  * **SVM Usage:** The model uses Support Vector Regression (SVR) to predict scores and Support Vector Classification (SVC) to predict the winner.
+  * **Target:** The model predicts both the winner (using classification) and the final score (using regression).
 
-### 2\. Season-Average Differential Model 
+### 2\. Differential Regression Model
 
-This is the primary, more advanced methodology. It assumes that a team's performance over an entire regular season is a better predictor of a bowl game outcome.
+This is the primary and most successful approach because it uses the full seasonal stats for both teams to predict the score difference, leading to a more accurate prediction.
 
-  * **Feature Engineering:** The average regular-season performance statistics (e.g., average points for, average passing yards) are calculated for every team in every season.
-  * **Predictive Features:** For a given bowl game, the model's features are the *difference between the two opponents' season averages*.
+  * **Feature Engineering:** The average performance statistics (e.g., avg points for, avg passing yards) are calculated for every team in every season, using all game types.
+  * **Predictive Features:** For a given game, the model is provided with the full seasonal stats for both the home and away teams.
   * **Cross-Validation:** A robust season-by-season cross-validation is used, where each season's bowl games serve as the test set, with the model being trained on all other seasons.
-
-## 📊 Results
-
-The project evaluates four distinct models based on the **Season-Average** methodology. The final model, a **Logistic Regression with feature selection**, proved to be the most effective at predicting game winners.
-
-#### Winner Selection Accuracy by Season (Logistic Regression Model)
-
-This chart displays the final model's accuracy for each individual season's bowl games.
+  * * **Target:** `score_difference` (predicted using Linear Regression).
 
 ## 🛠️ Tech Stack
 
@@ -62,21 +57,14 @@ pip install pandas numpy scikit-learn matplotlib
     cd college-football-predictor
     ```
 
-## 📈 Usage
-
-The entire analysis pipeline for the main methodology is contained within the Jupyter Notebook.
-
-1.  Place the dataset `cfb_box-scores_2002-2024.csv` inside the `/data` directory.
-2.  Open and run the `notebooks/model_training.ipynb` notebook.
-
-The notebook cells are organized sequentially to perform data loading, cleaning, feature engineering, and the training and evaluation of all models.
-
 ## 📁 Project Structure
 
 ```
 ├── data/
 │   └── cfb_box-scores_2002-2024.csv
 ├── notebooks/
+│   ├── data_exploration.ipynb
+│   ├── differential_model.ipynb
 │   └── model_training.ipynb
 ├── .gitignore
 └── README.md
@@ -87,7 +75,3 @@ The notebook cells are organized sequentially to perform data loading, cleaning,
 The dataset used is the "College Football (NCAAF) Box Scores 2002-2024" dataset, publicly available on Kaggle.
 
   * **Source:** [Kaggle Dataset](https://www.kaggle.com/datasets/cviaxmiwnptr/college-football-team-stats-2002-to-january-2024)
-
-## 🙏 Acknowledgements
-
-  * Credit to the original authors of the Stanford CS229 paper for the foundational methodology.
